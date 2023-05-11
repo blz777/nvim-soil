@@ -20,16 +20,16 @@ end
 
 local function get_image_command(file)
     vim.cmd("redraw")
-    Logger:info(string.format("Image %s.%s generated!", file, settings.image.format))
+    -- Logger:info(string.format("Image %s.%s generated!", file, settings.image.format))
     local image_file = string.format("%s.%s", file, settings.image.format)
-    return string.format("sxiv -b %s; echo $?", image_file)
+    return string.format("sxiv -b %s &; echo $?", image_file)
 end
 
 local function execute_command(command)
     local result = vim.fn.system(command)
     if tonumber(result) ~= 0 then
         vim.cmd("redraw")
-        Logger:error("Execution error")
+        -- Logger:error("Execution error")
         do return end
     end
 end
@@ -46,7 +46,7 @@ function M.run()
        local format = settings.image.format
        local darkmode = settings.image.darkmode and "-darkmode" or ""
 
-       Logger:info("Building...")
+       -- Logger:info("Building...")
        if cli_puml ~= 0 then
            local puml_command = string.format("plantuml %s -t%s %s", file_with_extension, format, darkmode)
            execute_command(puml_command)
