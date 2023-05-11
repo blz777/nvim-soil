@@ -22,7 +22,7 @@ local function get_image_command(file)
     vim.cmd("redraw")
     -- Logger:info(string.format("Image %s.%s generated!", file, settings.image.format))
     local image_file = string.format("%s.%s", file, settings.image.format)
-    return string.format("sxiv -b %s &; echo $?", image_file)
+    return string.format("open %s &; echo $?", image_file)
 end
 
 local function execute_command(command)
