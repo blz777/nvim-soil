@@ -18,7 +18,7 @@ local function get_image_command(file)
     vim.cmd("redraw")
     -- Logger:info(string.format("Image %s.%s generated!", file, settings.image.format))
     local image_file = string.format("%s.%s", file, settings.image.format)
-    return string.format("open %s &; echo $?", image_file)
+    return string.format("open '%s' &; echo $?", image_file)
 end
 
 local function execute_command(command)
@@ -44,10 +44,10 @@ function M.run()
 
        -- Logger:info("Building...")
        if cli_puml ~= 0 then
-           local puml_command = string.format("plantuml %s -t%s %s", file_with_extension, format, darkmode)
+           local puml_command = string.format("plantuml '%s' -t%s %s", file_with_extension, format, darkmode)
            execute_command(puml_command)
        else
-           local puml_command = string.format("java -jar %s %s -t%s %s; echo $?", puml_jar, file_with_extension, format, darkmode)
+           local puml_command = string.format("java -jar %s '%s' -t%s %s; echo $?", puml_jar, file_with_extension, format, darkmode)
            execute_command(puml_command)
        end
        execute_command(get_image_command(file))
